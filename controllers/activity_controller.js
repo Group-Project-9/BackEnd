@@ -29,7 +29,7 @@ export const newActivity = async (req, res, next) => {
 
     try {
         await newAct.save();
-        res.status(201).json("User created successfully.");
+        res.status(201).json("Activity created successfully.");
     }   catch (error) {
         next(error);
     }
