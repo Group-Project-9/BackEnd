@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 import Record from "../models/record_model.js";
 import errorHandler from "../utils/error.js";
+import { ObjectId } from "mongodb";
 
 const uri = 'mongodb+srv://spider_sorbet:TrYNBe5ui1t7FNoN@maindata.41fxhz2.mongodb.net/Fitness-Dairy?retryWrites=true&w=majority';
 //const uri = process.env.MONGO_URL;
@@ -57,4 +58,21 @@ export const readRecord = async (req, res, next) => {
     }
   };
 
-
+  export const deleteRecord = async (req, res, next) => {
+    const { id } = req.params; // Assuming the id is passed as a URL parameter
+    try {
+      await client.connect();
+      const db = client.db("Fitness-Dairy");
+      const coll = db.collection("Records");
+      const result = await coll.deleteOne({ _id: ObjectId(id) });
+      if (result.deletedCount === 1) {
+        res.status(200).json("Record deleted successfully.");
+      } else {
+        res.status(404).json("Record not found.");
+      }
+    } catch (error) {
+      next(error);
+    } finally {
+      await client.close();
+    }
+  };
