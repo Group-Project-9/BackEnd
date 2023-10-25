@@ -20,6 +20,51 @@ export const getUserRecord = async (req, res) => {
     }
 };
 
+export const updateUserRecord = async (req, res, next) => {
+    const {
+        _id,
+        activity,
+        date,
+        minute,
+        location,
+        distance,
+        note,
+        image} = req.body;
+    console.log(req.body._id);
+    const idSearch = _id['$oid'] ;
+    console.log(idSearch);
+    try {
+        await client.connect();
+        // database and collection code goes here
+        const db = client.db("Fitness-Dairy");
+        const coll = db.collection("Records");
+        // update code goes here
+        const result = await coll.updateOne(
+            {
+                _id: new ObjectId(idSearch)
+            }, 
+            {$set :
+                {
+                    activity: activity,
+                    date: date,
+                    minute: minute,
+                    location: location,
+                    distance: distance,
+                    note: note,
+                    image: image
+                }
+            }
+        );
+        console.log( idSearch + " has update with "+ result.modifiedCount);
+        res.status(200).json({data:'record has been update'});
+    } 
+        //in case of error
+    catch (error) {
+        next(error);
+        console.log('record is not update');
+    }    
+};
+
 export const deleteUserRecord = async (req, res, next) => {
     const recordId = req.body._id;
 
@@ -43,7 +88,7 @@ export const deleteUserRecord = async (req, res, next) => {
 export const updateUserInfo = async (req, res, next) => {
     console.log(req.body);
     console.log(req.params.id);
-    
+
     try {
         if (req.body.password) {
             req.body.password =  bcrypt.hashSync(req.body.password, 10);
