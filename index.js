@@ -6,6 +6,7 @@ import authRoute from './routes/auth_route.js';
 import recordRoute from './routes/record_route.js';
 import Record from './models/record_model.js';
 import getUserRecord from './routes/get_UserRecord_route.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ mongoose.connect(process.env.MONGO_URL,{
 // Initialize Express
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser());
 
 app.get('/record', (req, res) => {
     Record.find()

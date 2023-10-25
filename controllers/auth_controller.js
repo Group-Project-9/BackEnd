@@ -48,7 +48,6 @@ export const signIn = async(req, res, next) => {
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
         //  Remove the password from the user object
         const { password: userPassword, ...others } = validUser._doc;
-        console.log(others)
         // Return the user and the token
         res
             .cookie("access_token", token, { httpOnly: true })
