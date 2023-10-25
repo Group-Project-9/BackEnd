@@ -41,9 +41,9 @@ export const deleteUserRecord = async (req, res, next) => {
 };
 
 export const updateUserInfo = async (req, res, next) => {
-    // console.log(req.body);
-    // console.log(req.params.id);
-    if (req.user._id !== req.params.id) return next(errorHandler(401, "Access denied."));
+    console.log(req.body);
+    console.log(req.params.id);
+    
     try {
         if (req.body.password) {
             req.body.password =  bcrypt.hashSync(req.body.password, 10);
