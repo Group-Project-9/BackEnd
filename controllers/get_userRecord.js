@@ -79,6 +79,6 @@ export const updateUserRecord = async (req, res, next) => {
         //in case of error
     catch (error) {
         next(error);
-        console.log('record has not update');
+        console.log('record is not update');
     }    
-}
+};
