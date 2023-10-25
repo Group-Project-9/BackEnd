@@ -110,40 +110,6 @@ export const updateRecord = async (req, res, next) => {
     }    
 }
 
-export const activityUpdate = async (req, res, next) => {
-	const {
-        _id,
-		email,
-        activity,
-        date,
-        minute,
-        location,
-        distance,
-        note,
-        image
-	} = req.body;
-    const recordId = _id;
-    console.log(recordId);
-	try {
-		let record = await Record.findById(recordId);
-
-		if (!record) {
-			return res.status(404).json({ message: "Activity not found" });
-		}
-
-		// Update activity fields
-		record.activity = activity;
-        record.date = date;
-
-		// Save updated record to database
-		record = await record.save();
-
-		res.json(record);
-	} catch (error) {
-		next(error);
-		console.log('this one run');
-	}
-};
 
 export const deleteRecord = async (req, res, next) => {
     const {id} = req.body;
