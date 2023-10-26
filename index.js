@@ -7,7 +7,8 @@ import recordRoute from './routes/record_route.js';
 import Record from './models/record_model.js';
 import getUserRecord from './routes/get_UserRecord_route.js';
 import cookieParser from 'cookie-parser';
-import core from 'cors';
+import cors from 'cors';
+// import core from 'core-js/stable';
 
 dotenv.config();
 
