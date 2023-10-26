@@ -33,6 +33,7 @@ export const signUp = async (req, res, next) => {
 export const signIn = async(req, res, next) => {
     // Get the email and password from the request body
     const { email, password } = req.body;
+    console.log(req.body)
     
     try {
         // Find the user
@@ -62,6 +63,8 @@ export const signIn = async(req, res, next) => {
 }
 
 export const google = async(req, res, next)  => {
+
+  console.log(req.body)
 
   try {
 
