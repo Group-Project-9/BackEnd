@@ -28,7 +28,16 @@ mongoose.connect(process.env.MONGO_URL,{
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://fontend-rho.vercel.app/");
+  // โดเมนของเว็บไซต์หรือโดเมนที่ต้องการอนุญาต
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+  // เมธอดที่อนุญาต
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 
 app.get('/record', (req, res) => {
