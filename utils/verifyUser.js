@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 export const verifyToken = async (req, res, next) => {
     const token = req.cookies.access_token;
-    console.log(token);
 
     if (!token) return next(errorHandler(401, "Access denied. No token provided."));
 

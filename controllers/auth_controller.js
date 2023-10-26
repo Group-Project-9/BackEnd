@@ -2,6 +2,7 @@ import User from "../models/user_model.js";
 import bcrypt from "bcryptjs";
 import errorHandler from "../utils/error.js";
 import jwt from "jsonwebtoken";
+import e from "express";
 
 export const signUp = async (req, res, next) => {
     const { firstname, lastname, email, gender, weight, height, password } = req.body;
@@ -116,4 +117,29 @@ export const signOut = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+}
+
+export const editPassword = async (req, res, next) => {
+  const { email ,oldPass, newPass } = req.body;
+  
+  try {
+
+    const validPassword = bcrypt.compareSync(password, validUser.password);
+    if (!validPassword) { return next(errorHandler(401, "Invalid Password")); }
+
+    const hashedPassword = bcrypt.hashSync(newPass, 10);
+
+    const updatePassword = await User.findOne(req.body.email, {
+      $set: {
+          password: hashedPassword,
+      }
+  }, {new: true});
+
+  const {password, ...other} = updateUser._doc;
+        res.status(200).json(other);
+    
+  } catch (error) {
+    next(error);
+  }
+  
 }
